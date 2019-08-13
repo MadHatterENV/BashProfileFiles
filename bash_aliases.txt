@@ -1,0 +1,239 @@
+#---------------------------------------------------
+# !! Additional Aliases for current active user
+# {Compiled by} :: GodSpeed.
+# §§ == SYNTAX, Instructions to use this alias.
+#---------------------------------------------------
+
+# Interactive Commands.
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Additional Custom Aliases.
+alias mkdir='mkdir -pv'
+alias sat="echo '$[$SECONDS/60] min Active Time'"
+alias pico='nano'
+alias sdate='date -I'
+alias findbig="find . -type f -exec ls -s {} \; | sort -n -r | head -5"
+alias hcl='history -c; clear'
+
+# Screen Assistance.
+alias slist='screen -ls'
+alias swn='screen -S' 				## Start screen with a pre-defined name | §§ swn session-name
+alias sdev='SCREEN -S development'		## Start screen with sessionname 'development'
+
+# Packing And Unpacking Files
+alias tarc='tar -cpzf'				## Compressing TARs | §§ tarc filename.tgz ./*
+alias taru='tar -zxvf'				## Unpacking TARs | §§ taru filename.tgz
+
+# Directory Jumping/Movement within.
+alias cd..='cd ..'				## Directory Up
+alias ju='cd ..'				## Jump Up
+alias dup='ju'			
+alias jb='cd -'					## Jump Back
+alias dback='jb'
+alias jr='cd /root/'				## Jump naar Root Directory
+alias droot='jr'
+alias back='cd $OLDPWD'
+
+alias cdir='cp -R'		        	## copy van directories. | §§ cdir /dirname/
+
+# Directory Listings/Tree's.
+alias tree='tree -Cs'				## nice alternative to 'ls'
+#alias ls='ls -AlhF --color'			## add colors for filetype recognition
+#alias ls='ls -Al'
+alias ll='ls -alF'
+alias dir='ll'
+alias lx='ls -AlXB'		# sort by extension
+alias lk='ls -AlSr'		# sort by size
+alias la='ls -Al'		# show hidden files
+alias lr='ls -AlR'		# recursice ls
+alias lt='ls -Altr'		# sort by date
+alias lm='ls -Al |more'		# pipe through 'more'
+alias lsd="ls -al | grep ^d" 	# listing of directories in the current directory # or §§ ls-dir
+alias cls='clear ; echo'			## Clear Screen
+
+# Ask the system a question.
+alias whathostname='echo The Current Hostname is: \ $HOSTNAME '
+alias whatkernel='uname -a'
+alias whatversion='lsb_release -a; uname -a'
+
+
+#------------------------ System Info Script -------------------------------------------#
+function ii()   # get current host related info
+{
+    echo -e "\nYou are logged on ${RED}$HOST"
+    echo -e "\nAdditionnal information:$NC " ; uname -a
+    echo -e "\n${RED}Users logged on:$NC " ; w -h
+    echo -e "\n${RED}Current date :$NC " ; date
+    echo -e "\n${RED}Machine stats :$NC " ; uptime
+    echo -e "\n${RED}Memory stats :$NC " ; free
+    my_ip 2>&- ;
+    echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP:-"Not connected"}
+    echo -e "\n${RED}ISP Address :$NC" ; echo ${MY_ISP:-"Not connected"}
+    echo
+}
+
+alias sytemspects='ii'
+#---------------------------------------------------------------------------------------#
+
+# Network Related Stuff.
+alias ports='sudo netstat -tulanp'					## Show open Ports on this system.
+alias ipe='curl ipinfo.io/ip'						## Show external IP
+alias ipi='ip -4 addr show eno1 | grep -oP "(?<=inet ).*(?=/)"'		## Show internal IP(s)
+
+# Productivity.
+alias code-myprofile='code /home/godspeed/.bash_profile' 		## Opens .bash_profile for editing (in VS Code)
+
+# Reload Aliases.
+alias rbash='cd /home/godspeed/ && source .bashrc'			## Reloads .bashrc, and newly added aliases.
+
+# Location Aliases.
+# go2 | go | 2 #
+alias 2home='cd /home/godspeed'			# Return me back to HOME | aka : godspeed directory
+alias 2root='cd /root/'                         # Return me back to ROOT | aka : SuperUser main directory
+alias 2h='2home'
+alias 2r='2root'
+
+# GIT Aliases ===============================================================
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gco='git commit'
+alias gch='git checkout'
+alias grs='git reset'
+alias gpl='git pull'
+alias gps='git push'
+#alias glo='git log --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias branch="git symbolic-ref --short -q HEAD"
+alias gpo="git push origin $(branch)"
+
+# Some GIT functions - Command Shortners.
+function gitchguser() {
+    git config --global user.email $1
+}
+
+# SSH > Connection Assistance.
+#alias remco_home='ssh -2 username@home-ip -p 9999'
+#alias remco_dev='ssh -2 username@dev-ip -p 9999'
+#alias host_01='ssh -2 host@192.168.1.1 -p 300'
+#alias server_name='ssh 192.168.1.1 -l tom' # change the ip & user name
+
+# Open GUI Windows in current location
+alias window='thunar .'
+
+# Administration > User identification on the System.
+alias whois1="echo ; who | grep pts/[0-3] ; echo"
+
+# SYSINFO
+alias meminfo='free -m -l -t'
+alias cpuinfo='lscpu'
+
+alias dftotal="df -Tha --total"					## Disk Free
+alias dusort="du -ach | sort -h"				## Disk Usage
+alias free="free -mt"						## Free Memory of this System
+alias searchprocess="ps aux | grep -v grep | grep -i -e VSZ -e" 	# §§ searchprocess processname
+alias ps1='ps -aux'							# Protocol List -opt Invisible
+
+# TOP MEM EATING PROCESSES
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+# TOP CPU EATING PROCESSES
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+alias psgrep="ps aux | grep" # e.g."ps-grep java" will list processes that have java in description
+
+# Network Diagnostics.
+alias ping='ping -c 3'
+
+# NETSTAT
+alias listen='netstat -l'
+#alias ports='netstat -tulanp'
+alias routing='netstat -r'
+alias runwhere='netstat -ap | grep'
+alias nterfaces='netstat -i'
+
+# Update/Cleanup > System/Packages
+alias apt_upd='sudo apt-get update && sudo apt-get upgrade'
+alias apt_clean='sudo apt-get autoclean && apt-get autoremove'
+
+# Device Commands
+alias boot='sudo reboot'
+alias shut='sudo shutdown -h now'
+
+# File Calculations/Revelations
+alias getlines='find . -name "*.*" | xargs wc -l'
+
+# Unlock an connected iPhone, to check the files.
+alias unlockiphone='sudo chmod 777 /var/lib/lockdown'
+
+# VIDEO FUNCTIONS
+function vid2mp4() {
+    ffmpeg -i $1 -vcodec mpeg4 $2
+}
+
+function video2x() {
+    ffmpeg -i $1 -vcodec h264 -an -vf "fps=60, setpts=0.50*PTS" $2
+}
+
+# Lists all your network-outlets
+function mynetworks() {
+    # First lists all networks, then grep-sorts for just the ID and PSK info. Finally sed puts a space between each set.
+    echo ' '
+    sudo cat /etc/NetworkManager/system-connections/* | grep -Ew 'id|psk' | grep -v 'key' | sed '/psk/s/$/ \n/'
+    echo ' '
+    echo ' '
+}
+
+# Counts number of files (recursively) in a given directory.
+function count_files(){
+  if [ $# -eq 0 ]; then
+    echo "Usage: count all files recursively in directory."
+    echo "Pass directory path as variable-argument."
+  else
+    find $1 -type f | wc -l
+  fi
+}
+
+# Pass your SSID of a wifi-network, and return it's password in plaintext, nice for visitors
+function wifi_passwd(){
+  security find-generic-password -D "your network ssid here" -a "${1}" -g | grep "password:"
+}
+
+# File Rights
+alias n8stat='stat -f "%Mp%Lp %N"' # n8stat filename
+
+#==== MySQL ===============================================================
+alias mysql-start="sudo service mysql start"
+alias mysql-stop="sudo service mysql stop"
+alias mysql-restart="sudo service mysql restart"
+alias mysql-status="sudo service mysql status"
+alias mysql-connect-root="mysql -uroot -p"
+alias mysql-code-my.conf="sudo code /etc/mysql/my.cnf"
+
+#==== Nginx ===============================================================
+alias nginx-start="sudo nginx"
+alias nginx-stop="sudo nginx -s stop"
+alias nginx-restart="sudo service nginx restart"
+alias nginx-status="sudo ps aux | grep nginx"
+alias nginx-reload="sudo kill -HUP `cat /usr/local/var/run/nginx.pid`"
+alias nginx-code-nginx.conf="sudo code /usr/local/etc/nginx/nginx.conf"
+alias nginx-config-verify="sudo nginx -t -c /usr/local/etc/nginx/nginx.conf"
+alias nginx-config-backup=nginxconfigbackup
+
+nginxconfigbackup(){
+  sudo cp /usr/local/etc/nginx/nginx.conf /usr/local/etc/nginx/nginx.conf.$(date "+%Y-%m-%d_%H:%M")-$1 #the parameter ending is the comment use dashes "-" between words
+}
+
+#==== Tomcat ===============================================================
+alias tomcat-start="/opt/tomcat/bin/startup.sh"
+alias tomcat-stop="/opt/tomcat/bin/shutdown.sh"
+alias tomcat-status="sudo ps aux | grep tomcat"
+alias tomcat-cd-webapps="cd /opt/tomcat/webapps"
+#alias tomcat-copy-root-to-apps="sudo cp $HOME/projects/godspeed/web-ui/target/ROOT.war /opt/tomcat/webapps"
+alias tomcat-show-log="tail -f /opt/tomcat/logs/catalina.out"
+#alias tomcat-backup="cp /opt/tomcat/webapps/ROOT.war \"$HOME/godspeed/ROOT.war.backup.$(date +%F_%R)\""
+alias tomcat-remove-root="rm -rf /opt/tomcat/webapps/ROOT*"
+
