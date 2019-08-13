@@ -171,15 +171,7 @@ mvg (){
   fi
 }
 
-
 # Locale and editor
 export EDITOR=code
 export BROWSER="vivaldi '%s' &"
-
-### SOURCES : https://gist.github.com/Rhernandez513/05d8f517d4439f889fe3
-### SOURCES : https://www.stefaanlippens.net/my_bashrc_aliases_profile_and_other_stuff/
-### SOURCES : https://hackernoon.com/handy-docker-aliases-4bd85089a3b8
-### SOURCES : http://seanbowman.me/blog/fzf-fasd-and-bash-aliases/
-
-
 
