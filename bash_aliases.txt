@@ -9,13 +9,47 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+##about ls
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -ltrhA'
+alias ..='cd ../'
+alias ...='cd ../..'
+alias gl='ls|grep --color'
+
 # Additional Custom Aliases.
 alias mkdir='mkdir -pv'
+alias top='htop' # you should install htop first
+#alias bc='bc -ql' #
+
 alias sat="echo '$[$SECONDS/60] min Active Time'"
 alias pico='nano'
 alias sdate='date -I'
 alias findbig="find . -type f -exec ls -s {} \; | sort -n -r | head -5"
 alias hcl='history -c; clear'
+
+##others
+#alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+alias ghistory="history | grep"
+alias port='netstat -tulanp'
+alias listen="lsof -P -i -n"
+#alias ?='man' #haha
+
+##Repeatlast command as root
+alias fuck='sudo !!'
+
+##extra's
+alias f='file'
+alias s='stat'
+alias svi='sudo vi'
+
+##show variables
+alias showpath='echo -e ${PATH//:/\\n}'
+
+##update via apt-get
+alias updatey="sudo apt-get --yes"
+alias update='sudo apt-get update && sudo apt-get upgrade'
+
 
 # Screen Assistance.
 alias slist='screen -ls'
@@ -36,6 +70,15 @@ alias jr='cd /root/'				## Jump naar Root Directory
 alias droot='jr'
 alias back='cd $OLDPWD'
 
+##Lateral Movement
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+
 alias cdir='cp -R'		        	## copy van directories. | §§ cdir /dirname/
 
 # Directory Listings/Tree's.
@@ -52,6 +95,42 @@ alias lt='ls -Altr'		# sort by date
 alias lm='ls -Al |more'		# pipe through 'more'
 alias lsd="ls -al | grep ^d" 	# listing of directories in the current directory # or §§ ls-dir
 alias cls='clear ; echo'			## Clear Screen
+
+## EXTRA'S https://github.com/vikaskyadav/awesome-bash-alias
+
+##Estimate file space usage to maximum depth__
+alias du1="du -d 1"
+
+##Launch Simple HTTP Server__
+alias serve='python -m SimpleHTTPServer'
+
+##Free and Used__
+alias meminfo="free -m -l -t"
+
+##Get top process eating memory__
+alias psmem="ps auxf | sort -nr -k 4"
+alias psmem10="ps auxf | sort -nr -k 4 | head -10"
+
+##Get top process eating cpu__
+alias pscpu="ps auxf | sort -nr -k 3"
+alias pscpu10="ps auxf | sort -nr -k 3 | head -10"
+
+##Resume wget by default__
+alias wget="wget -c"
+
+##Grabs the disk usage in the current directory__
+alias usage='du -ch | grep total'
+
+##Gets the total disk usage on your machine__
+alias totalusage='df -hl --total | grep total'
+
+##Shows the individual partition usages without the temporary memory values__
+alias partusage='df -hlT --exclude-type=tmpfs --exclude-type=devtmpfs'
+
+##Gives you what is using the most space. Both directories and files. Varies on current directory__
+alias most='du -hsx * | sort -rh | head -10'
+
+
 
 # Ask the system a question.
 alias whathostname='echo The Current Hostname is: \ $HOSTNAME '
@@ -91,9 +170,118 @@ alias rbash='cd /home/godspeed/ && source .bashrc'			## Reloads .bashrc, and new
 # Location Aliases.
 # go2 | go | 2 #
 alias 2home='cd /home/godspeed'			# Return me back to HOME | aka : godspeed directory
-alias 2root='cd /root/'                         # Return me back to ROOT | aka : SuperUser main directory
+alias 2root='cd /root/'                 # Return me back to ROOT | aka : SuperUser main directory
 alias 2h='2home'
 alias 2r='2root'
+
+##Generate random password
+alias genpass='head -c 32 /dev/random | base64 | sed "s:[+=/]::g" | head -c 32'
+
+##URL in UTF-8
+alias urldecode='python -c "import sys, os, urllib as ul; name = ul.unquote_plus(sys.argv[1]); print name; os.rename(sys.argv[1], name)"'
+
+## Checksum Files
+mcd(){ mkdir -p "$@" && cd "$@";}
+md5(){ echo -n "$1" | md5sum; } # MD5checksum
+
+##What Is My IP (internal/external)
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+ipadrs() { curl ipinfo.io/$1; echo "";}
+# or curl ip.kfd.me
+# or curl -s ip.chinaz.com/getip.aspx | cut -d "'" -f2
+alias myip='ifconfig en0 | grep inet | grep -v inet6 | cut -d ' ' -f2'
+
+##compression
+
+function tarz() {
+        [ "$1" != "" ] && tar -czRf $1.tar.gz $1 && echo "$1.tar.gz created successfully!"|| echo "Usage: tarz [folder_or_file]"
+}
+
+function tarj() {
+        [ "$1" != "" ] && tar -cjRf $1.tar.bz2 $1 && echo "$1.tar.bz2 created successfully!" || echo "Usage: tarj [folder_or_file]"
+}
+
+function utar() {
+        [ "$1" != "" ] && tar -xvf $1 || echo "Usage: utar [tar_file_name]"
+}
+
+function extract() {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+##additional functions
+function psinfo () {
+        echo "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
+        ps aux | grep $1
+}
+
+##curl json
+function cjson ()
+{
+        curl -s $1 | python -mjson.tool
+}
+
+##proxy support
+alias glide="https_proxy=socks5://localhost:1080 http_proxy=socks5://localhost:1080 glide" # glide proxy
+
+##grep history
+alias hgrep="history | grep"
+
+##friendly cat
+function cat(){
+    /bin/cat $@ | head -n100
+}
+
+
+
+
+
+##VPS Connectivity (Connection to external boxes)
+alias vps='ssh root@your_vps_address -p port -i ~/.ssh/identify' #
+alias vps-1='ssh root@vps-1-address -p port' #VPS-1
+alias vps-2='ssh root@vps-2-address -p port' #VPS-2
+alias vps-3='ssh root@vps-3-address -p port' #VPS-3
+function vps-ctl(){
+    command=$1
+    if [[ "$command" != '' ]]; then
+        echo -n "vps-0: "
+            vps "$command"
+        echo -n "vps-1: "
+            vps-1 "$command"
+        echo -n "vps-2: "
+            vps-2 "$command"
+        echo -n "vps-3: "
+            vps-3 "$command"
+    fi
+}
+
+
+##Git stuff
+
+##Enable p http://www.github.com/hello
+#piing() { /bin/ping -A -c 5 $(echo $1 | cut -d "/" -f3) } # piing https://github.com/404/403
+#diig() { dig $(echo $1 | cut -d "/" -f3) } # diig https://www.google.com/404/403
+
+f-gitpush() { { cd .git &> /dev/null && cd .. && git add -A && git commit -m "${1:-push`date`}" && git push; } || echo "WARNING! This is not a git folder."; }
+f-unzip() { unzip -O cp936 $1; }
+f-iconv() { for i in "$@";do iconv -f gbk -t utf8 "$1" -o "$1"; shift;done; }
 
 # GIT Aliases ===============================================================
 alias g='git'
@@ -236,4 +424,128 @@ alias tomcat-cd-webapps="cd /opt/tomcat/webapps"
 alias tomcat-show-log="tail -f /opt/tomcat/logs/catalina.out"
 #alias tomcat-backup="cp /opt/tomcat/webapps/ROOT.war \"$HOME/godspeed/ROOT.war.backup.$(date +%F_%R)\""
 alias tomcat-remove-root="rm -rf /opt/tomcat/webapps/ROOT*"
+
+
+## ---------------------------------------------------------------------------------
+## Aliases specific to Python
+alias 'py'='python'
+alias 'pirm'='pip uninstall -y'
+alias 'sdist'='rm -rf dist/ ; py setup.py sdist'
+alias 'bdist'='rm -rf dist/ ; py setup.py bdist_wheel'
+
+# Pip install
+function pi {
+    if [ -z "$1" ]
+    then
+        # Looks for setup.py in the current directory and installs the package
+        print "Installing from local setup.py file in the current directory"
+        pip install .
+    else
+        # Installs the package from PyPI
+        print "Fetching from PyPI"
+        pip install "$1"
+    fi
+}
+
+alias 'pii'='pi'
+
+
+## ---------------------------------------------------------------------------------
+# Create new venv using python3
+# If no name is passed will default to .venv
+function mkvenv {
+    if [ -z "$1" ]
+    then
+        print "Creating virtualenv: .venv"
+        python3 -m venv .venv
+        avenv
+    else
+        print "Creating virtualenv: $1"
+        python3 -m venv "$1"
+        avenv "$1"
+    fi
+
+    print "Upgrading pip"
+    pip install pip --upgrade
+
+    print "Installing wheel package"
+    pip install wheel
+    print "Activated virtualenv"
+}
+
+alias 'mkenv'='mkvenv'
+
+
+## ----------------------------------------------------------------------------------
+# Remove a virtual env.
+# If no name is passed will default to .venv
+function rmvenv {
+    if [ -z "$1" ]
+    then
+        print "Removing virtualenv: .venv"
+        python3 -m venv .venv
+        rm -rf .venv
+    else
+        print "Removing virtualenv: $1"
+        rm -rf "$1"
+    fi
+}
+
+alias 'rmenv'='rmvenv'
+
+
+## ---------------------------------------------------------------------------------
+
+# Activate virtual env
+# If no name is passed will default to .venv
+function avenv {
+    # If no paramerter is passed try to activate .venv first. If .venv doesnt exist try with the next closest one. If both .venv37 and .venv38 exist. It will pick .venv37
+    # If parameter is passed, try to activate that one
+    if [ -z "$1" ]
+    then
+
+        if [ -d ".venv" ]
+        then
+            source .venv/bin/activate
+            print "Activated virtualenv: .venv"
+
+        else
+            # Piping the output of find command to fzf to select a virtual env.
+            virtual_env=$(find -maxdepth 2  -type d -name ".venv*"  | fzf)
+            print "Activated virtualenv: $virtual_env"
+            source "$virtual_env"/bin/activate
+        fi
+
+    else
+         source "$1"/bin/activate; print "Activated virtualenv: $1" || print "Failed to activate virtualenv: $1"
+
+    fi
+}
+
+alias 'aenv'='avenv'
+
+
+## -------------------------------------------------------------------------------------
+
+# Deactivate virtual env
+
+function dvenv {
+
+    if [ -z "$1" ]
+    then
+        deactivate || print "Failed to deactivate virtualenv: .venv"
+        print "Deactivated virtualenv"
+    else
+        deactivate "$1" || print "Failed to deactivate virtualenv: $1"
+        print "Deactivated virtualenv"
+    fi
+}
+alias 'denv'='dvenv'
+
+
+## -------------------------------------------------------------------------------------
+
+## SOURCE : https://github.com/aashutoshrathi/awesome-bashrc
+
+## -------------------------------------------------------------------------------------
 
