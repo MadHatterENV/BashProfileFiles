@@ -174,4 +174,4 @@ mvg (){
 # Locale and editor
 export EDITOR=code
 export BROWSER="vivaldi '%s' &"
-
+theme.sh tomorrow-night
