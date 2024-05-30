@@ -61,7 +61,7 @@ fi
 :octocat: We use [SemVer](http://semver.org/) for versioning. 
 
 ## Author(s)
-This script was written by :zap: [MadHatterX](--MadHatterX--) :zap:<br/>
+This script was written by :zap: [MadHatterX](--MadHatter4²--) :zap:<br/>
 Thanks to the linux-community, this list of applications/commands was compiled during my ICT career.
 
 ## Thanks To
