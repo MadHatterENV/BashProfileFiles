@@ -13,9 +13,8 @@ alias mv='mv -i'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -ltrhA'
-alias ..='cd ../'
-alias ...='cd ../..'
 alias gl='ls|grep --color'
+alias cdl='cd $1 && ls'
 
 # Additional Custom Aliases.
 alias mkdir='mkdir -pv'
@@ -49,7 +48,8 @@ alias showpath='echo -e ${PATH//:/\\n}'
 ##update via apt-get
 alias updatey="sudo apt-get --yes"
 alias update='sudo apt-get update && sudo apt-get upgrade'
-
+alias uu='sudo apt update && sudo apt upgrade -y'
+alias upall='sudo apt update && sudo apt upgrade -y'
 
 # Screen Assistance.
 alias slist='screen -ls'
@@ -71,12 +71,19 @@ alias droot='jr'
 alias back='cd $OLDPWD'
 
 ##Lateral Movement
-alias ..='cd ..'
-alias ...='cd ../../../'
+# Movement inside directories
+alias ..='cd ../'
+alias ...='cd ../..'
 alias ....='cd ../../../../'
 alias .....='cd ../../../../'
+alias .2='cd ../..'
+alias .3='cd ../../..'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
+alias mkcd='mkcd_alias() { mkdir -p "$1" && cd "$1"; }; mkcd_alias'
+
+
+# other aliases
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 alias cdir='cp -R'		        	## copy van directories. | §§ cdir /dirname/
@@ -306,6 +313,10 @@ function gitchguser() {
 #alias remco_dev='ssh -2 username@dev-ip -p 9999'
 #alias host_01='ssh -2 host@192.168.1.1 -p 300'
 #alias server_name='ssh 192.168.1.1 -l tom' # change the ip & user name
+
+# Check network connection activity
+alias pong='ping -4 1.1.1.1'
+alias eip='curl ifconfig.me'
 
 # Open GUI Windows in current location
 alias window='thunar .'
