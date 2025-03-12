@@ -23,6 +23,7 @@ alias top='htop' # you should install htop first
 
 alias sat="echo '$[$SECONDS/60] min Active Time'"
 alias pico='nano'
+alias nano='micro' # best practice use micro instead of nano
 alias sdate='date -I'
 alias findbig="find . -type f -exec ls -s {} \; | sort -n -r | head -5"
 alias hcl='history -c; clear'
