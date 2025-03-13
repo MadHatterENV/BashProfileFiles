@@ -9,7 +9,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-##about ls
+##about ls > newer toos is exa
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -ltrhA'
