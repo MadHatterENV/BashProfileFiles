@@ -37,6 +37,7 @@ alias listen="lsof -P -i -n"
 
 ##Repeatlast command as root
 alias fuck='sudo !!'
+alias rar='sudo !!'
 
 ##extra's
 alias f='file'
